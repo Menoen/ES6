@@ -37,6 +37,14 @@
                 let faceList = document.querySelectorAll("#face-list li");
                 let now = 0;
                 faceList[now].classList.add("active");
+                for(let i = 0;i<faceList.length;i++){
+                    faceList[i].onclick = function(){
+                        faceList[now].classList.remove("active");
+                        faceList[i].classList.add("active");
+                        face.style.backgroundImage = "url("+imageUrl[i]+")";
+                        now = i;
+                    }
+                }
             }
 		</script>
 	</body>
