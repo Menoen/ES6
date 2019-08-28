@@ -3,21 +3,41 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="style.css"/>
+		<link rel="stylesheet" type="text/css" href="style.css" />
 		<title>脸谱实现</title>
 	</head>
 	<body>
-        <div class="main">
-            <div class="face face0"></div>
-            <div class="face face1"></div>
-            <div class="face face2"></div>
-            <div class="face face3"></div>
-            <div class="face face4"></div>
-            <div class="face face5"></div>
-            <div class="face face6"></div>
-            <div class="face face7"></div>
-            <div class="face face8"></div>
-            <div class="face face9"></div>
-        </div>
+		<div id="wrap">
+			<div id="face" style="background-image: url(img/face-1.png)"></div>
+			<ul id="face-list">
+			</ul>
+		</div>
+		<script type="text/javascript">
+			let imageUrl = [
+				"img/face-1.png",
+				"img/face-2.png",
+				"img/face-3.png",
+				"img/face-4.png",
+				"img/face-5.png",
+				"img/face-6.png",
+				"img/face-7.png",
+			]; 
+            // 布局生成
+            {
+				let face = document.querySelector("#face-list");
+				let inner = "";
+				for (let i = 0; i < imageUrl.length; i++) {
+					inner += '<li style="transform:rotate(' + (360 / imageUrl.length) * i + 'deg)"><div style="background-image:url('+imageUrl[i]+');transform:rotate(-' + (360 / imageUrl.length) * i + 'deg)">1</div></li>'
+				}
+				face.innerHTML = inner;
+			}
+            // 事件
+            {
+                let face = document.querySelector("#face");
+                let faceList = document.querySelectorAll("#face-list li");
+                let now = 0;
+                faceList[now].classList.add("active");
+            }
+		</script>
 	</body>
 </html>
