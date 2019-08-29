@@ -61,18 +61,46 @@
 			</div>
 		</div>
 		<script type="text/javascript">
-			let arrLi = document.querySelectorAll("#list input");
 			let list = document.getElementById("list");
+            let lis = document.querySelectorAll("li")
 			let checkAll = document.getElementById("checkAll");
-			list.onclick = function() {
+            let remove = document.getElementById("remove");
+            lis = Array.from(lis);
+            lis.forEach(item=>{
+                let checkbox = item.querySelector("input");
+                checkbox.onchange = ()=>{
+                    item.className = checkbox.checked?"active":"";
+                    checkAll.checked = lis.every(item =>item.querySelector("input").checked);
+                }
+            })
+            checkAll.onchange = function(){
+                lis.forEach(item=>{
+                    let checkbox = item.querySelectorAll("input");
+                    checkbox.checked = this.checked;//this指的是item的定义的位置的this,也就是checkAll
+                    item.className = checkbox.checked?"active":"";
+                });
+            }
+            remove.onclick = ()=>{
+                lis.filter(item=>{
+                    let checkbox = item.querySelector("input");//这里的item是遍历lis数组的单一节点
+                    if(checkbox.checked){
+                        item.parentNode.removeChild(item);
+                        return false;
+                    }else {
+                        return true;
+                    }
+                })
+                checkAll.checked = lis.every(item=>item.querySelector("input").checked)&&lis.length>0
+            }
+			/* list.onclick = function() {
 				console.log([...arrLi].every(item => item.checked));
 				if ([...arrLi].every(item => item.checked)) {
 					checkAll.checked = true;
 				} else {
 					checkAll.checked = false;
 				}
-			}
-			checkAll.onclick = function() {
+			} 
+			checkAll.onchange = function() {
 				if (checkAll.checked==false) {
 					console.log("选中");
 					[...arrLi].every(item => item.checked = false);
@@ -80,7 +108,7 @@
 					console.log("未选中");
 					[...arrLi].every(item => item.checked = true);
 				}
-			}
+			}*/
 		</script>
 	</body>
 </html>
