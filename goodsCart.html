@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" type="text/css" href="css/goodsCart.css" />
+        <title>购物车实现</title>
+    </head>
+
+    <body>
+        <section>
+            <div class="header">
+                <a class="menu-btn" href="javascript:;"></a>
+                <div class="title">购物车</div>
+                <a class="more-btn" href="javascript:;" title="管理"></a>
+            </div>
+            <ul class="goods-list">
+                <!--operate-->
+                <li>
+                    <a class="checkbox"></a>
+                    <div class="goods-img">
+                        <img src="img/goods-img.png" alt="">
+                    </div>
+                    <div class="goods-info">
+                        <a href="javascript:;" class="goods-name">新款耐克女鞋</a>
+                        <p class="goods-type">
+                            <span>蓝色</span>
+                            <span>36码</span>
+                        </p>
+                        <p class="goods-price">￥688</p>
+                    </div>
+                    <div class="goods-count">
+                        <a class="reduce-btn">-</a>
+                        <span class="number">1</span>
+                        <a class="add-btn">+</a>
+                    </div>
+                </li>
+                <li>
+                    <a class="checkbox"></a>
+                    <div class="goods-img">
+                        <img src="img/goods-img.png" alt="">
+                    </div>
+                    <div class="goods-info">
+                        <a href="javascript:;" class="goods-name">新款耐克女鞋</a>
+                        <p class="goods-type">
+                            <span>蓝色</span>
+                            <span>36码</span>
+                        </p>
+                        <p class="goods-price">￥388</p>
+                    </div>
+                    <div class="goods-count">
+                        <a class="reduce-btn">-</a>
+                        <span class="number">1</span>
+                        <a class="add-btn">+</a>
+                    </div>
+                </li>
+                <li>
+                    <a class="checkbox"></a>
+                    <div class="goods-img">
+                        <img src="img/goods-img.png" alt="">
+                    </div>
+                    <div class="goods-info">
+                        <a href="javascript:;" class="goods-name">新款耐克女鞋</a>
+                        <p class="goods-type">
+                            <span>蓝色</span>
+                            <span>36码</span>
+                        </p>
+                        <p class="goods-price">￥588</p>
+                    </div>
+                    <div class="goods-count">
+                        <a class="reduce-btn">-</a>
+                        <span class="number">1</span>
+                        <a class="add-btn">+</a>
+                    </div>
+                </li>
+            </ul>
+            <div class="sub-title">推荐</div>
+            <ul class="commend-list">
+                <li>
+                    <a href="javascript:;">
+                        <span class="goods-img">
+                            <img src="img/goods-img.png" alt="">
+                        </span>
+                        <span class="goods-price">￥588</span>
+                        <span class="goods-name">新款耐克女鞋</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <span class="goods-img">
+                            <img src="img/goods-img.png" alt="">
+                        </span>
+                        <span class="goods-price">￥588</span>
+                        <span class="goods-name">新款耐克女鞋</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="bottom-info">
+                <div class="total show">
+                    <span>最高单价：¥588</span>
+                    <span>件数：3</span>
+                    <span>总价：¥1212.00</span>
+                </div>
+                <div class="goods-ctrl">
+                    <span class="all-goods">
+                        <a href="javascript:;" class="all-checked"></a>
+                        <span>全选</span>
+                    </span>
+                    <a href="javascript:;" class="remove">删除</a>
+                </div>
+            </div>
+        </section>
+        <script type="text/javascript">
+            let moreBtn = document.getElementsByClassName("more-btn")[0];
+            let checkbox = document.querySelectorAll(".checkbox");
+            let total = document.querySelector(".total");
+            let goodsCtrl = document.querySelector(".goods-ctrl");
+            let goodsList = document.querySelector(".goods-list");
+            let goodsLists = [...goodsList.querySelectorAll("li")];
+            let allChecked = document.querySelector(".all-checked");
+            moreBtn.onclick = function() {
+                total.classList.toggle("show");
+                goodsCtrl.classList.toggle("show");
+                goodsList.classList.toggle("operate");
+            };
+            // 数量加减
+
+            // 商品选中
+            goodsLists.forEach(item => {
+                checkbox = item.querySelector(".checkbox");
+                number = item.querySelector(".number");
+                let nub = Number(number.innerText);
+                let reduceBtn = item.querySelector(".reduce-btn");
+                let addBtn = item.querySelector(".reduce-btn");
+                checkbox.onclick = () => {
+                    checkbox.classList.toggle("checked");
+                    if (goodsLists.every(item => item.querySelector(".checkbox").classList.contains(
+                            "checked"))) {
+                        allChecked.classList.add("checked");
+                    } else {
+                        allChecked.classList.remove("checked");
+                    }
+                }
+                reduceBtn.onclick = () => {
+                    nub--;
+                    if (nub < 0) {
+                        nub = 0;
+                        alert("再少就没啦，可以通过商品管理删除");
+                        return;
+                    }
+                    number.innerText = nub;
+                    toTotal();
+                }
+                addBtn.onclick = () => {
+                    nub++;
+                    if (nub > 99) {
+                        nub = 99;
+                        alert("再多就装不下啦，可以多下几单鸭");
+                        return;
+                    }
+                    number.innerText = nub;
+                    toTotal();
+                }
+            })
+            //全选和取消
+            allChecked.onclick = () => {
+                if (allChecked.classList.contains("checked")) {
+                    goodsLists.forEach(item => {
+                        item.querySelector(".checkbox").classList.add("checked");
+                    })
+                } else {
+                    goodsLists.forEach(item => {
+                        item.querySelector(".checkbox").classList.remove("checked");
+                    })
+                }
+            }
+            // 删除
+            // toTotal
+            toTotal();
+            let toTotal=()=>{
+                let maxPrice = 0;//最高单价
+                let nubTotal = 0;//总数
+                let priceTotal = 0;//总价
+                goodsLists.forEach(item=>{
+                    let number = item.querySelector(".number");
+                    let nub = Number(number.innerText);
+                    if(nub>0){
+                        let price=item.querySelector(".goods-price").innerText;
+                        price = Number(price.substr(1));
+                        nubTotal+=nub;
+                        priceTotal+=nub*price;
+                        maxPrice = Math.max(priceTotal,maxPrice);
+                    }
+                });
+                total.innerHTML = `
+                <span></span>
+                `;
+            }
+        </script>
+    </body>
+</html>
